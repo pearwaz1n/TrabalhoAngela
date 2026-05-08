@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Matrizes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar" id="main-nav">
+        <div class="navbar-container">
+            <button class="nav-btn" onclick="openScreen('tela-basicas', this)">Adição / Subtração</button>
+            <button class="nav-btn" onclick="openScreen('tela-escalar', this)">Escalar</button>
+            <button class="nav-btn" onclick="openScreen('tela-mult', this)">Multiplicação</button>
+            <button class="nav-btn" onclick="openScreen('tela-det', this)">Determinante</button>
+            <button class="nav-btn" onclick="openScreen('tela-gauss', this)">Sistemas (Gauss)</button>
+        </div>
+    </nav>
+
+    <main class="main-content" id="main-container">
+
+        <section id="tela-inicio" class="screen welcome-screen active">
+            <h1 class="welcome-title">Bem-vindo!</h1>
+            <button class="btn btn-action" onclick="iniciarApp()">Iniciar</button>
+        </section>
+
+        <section id="tela-basicas" class="screen">
+            <div class="screen-header">
+                <h2>Adição e Subtração</h2>
+                <p>As matrizes devem possuir exatamente a mesma ordem.</p>
+            </div>
+            <div class="setup-row">
+                <div class="setup-box">Linhas: <input type="number" id="bas_rows" value="2" min="1"></div>
+                <div class="setup-box">Colunas: <input type="number" id="bas_cols" value="2" min="1"></div>
+                <button class="btn btn-gerar" onclick="initScreen('bas')">Atualizar Dimensões</button>
+            </div>
+            <div class="matrices-area">
+                <div class="matrix-container">
+                    <h3>Matriz A</h3><div class="grid-wrapper"><div id="bas_gridA" class="grid"></div></div>
+                </div>
+                <div class="matrix-container">
+                    <h3>Matriz B</h3><div class="grid-wrapper"><div id="bas_gridB" class="grid"></div></div>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-calc" onclick="calcular('soma', 'bas')">Somar (A + B)</button>
+                <button class="btn btn-calc" onclick="calcular('sub', 'bas')">Subtrair (A - B)</button>
+            </div>
+            <div id="bas_error" class="error-msg hidden"></div>
+            <div class="result-box">
+                <h3>Resultado</h3>
+                <div id="bas_result">Aguardando operação...</div>
+            </div>
+        </section>
+
+        <section id="tela-escalar" class="screen">
+            <div class="screen-header">
+                <h2>Multiplicação por Escalar</h2>
+                <p>Multiplique todos os elementos da matriz por um número real.</p>
+            </div>
+            <div class="setup-row">
+                <div class="setup-box">L: <input type="number" id="esc_rows" value="2" min="1"></div>
+                <div class="setup-box">C: <input type="number" id="esc_cols" value="3" min="1"></div>
+                <div class="setup-box" style="margin-left: 15px; border-left: 2px solid var(--border-color); padding-left: 15px;">
+                    Valor do Escalar: <input type="number" id="esc_val" value="5" step="0.1">
+                </div>
+                <button class="btn btn-gerar" onclick="initScreen('esc')">Atualizar</button>
+            </div>
+            <div class="matrices-area">
+                <div class="matrix-container">
+                    <h3>Matriz Base</h3><div class="grid-wrapper"><div id="esc_gridA" class="grid"></div></div>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-calc" onclick="calcular('escalar', 'esc')">Calcular Produto</button>
+            </div>
+            <div id="esc_error" class="error-msg hidden"></div>
+            <div class="result-box">
+                <h3>Resultado</h3>
+                <div id="esc_result">Aguardando operação...</div>
+            </div>
+        </section>
+
+        <section id="tela-mult" class="screen">
+            <div class="screen-header">
+                <h2>Produto Matricial</h2>
+                <p>O número de colunas da Matriz A deve ser igual ao número de linhas da Matriz B.</p>
+            </div>
+            <div class="setup-row">
+                <div class="setup-box">Matriz A (L × C): 
+                    <input type="number" id="mul_rowsA" value="2" min="1"> × <input type="number" id="mul_colsA" value="3" min="1">
+                </div>
+                <div class="setup-box" style="margin-left: 15px; border-left: 2px solid var(--border-color); padding-left: 15px;">
+                    Matriz B (L × C): 
+                    <input type="number" id="mul_rowsB" value="3" min="1"> × <input type="number" id="mul_colsB" value="2" min="1">
+                </div>
+                <button class="btn btn-gerar" onclick="initScreen('mul')">Atualizar Dimensões</button>
+            </div>
+            <div class="matrices-area">
+                <div class="matrix-container">
+                    <h3>Matriz A</h3><div class="grid-wrapper"><div id="mul_gridA" class="grid"></div></div>
+                </div>
+                <div class="matrix-container">
+                    <h3>Matriz B</h3><div class="grid-wrapper"><div id="mul_gridB" class="grid"></div></div>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-action" onclick="calcular('mult', 'mul')">Multiplicar A × B</button>
+            </div>
+            <div id="mul_error" class="error-msg hidden"></div>
+            <div class="result-box">
+                <h3>Resultado (Matriz A×B)</h3>
+                <div id="mul_result">Aguardando operação...</div>
+            </div>
+        </section>
+
+        <section id="tela-det" class="screen">
+            <div class="screen-header">
+                <h2>Cálculo de Determinante</h2>
+                <p>Válido exclusivamente para matrizes quadradas (Sarrus / Laplace).</p>
+            </div>
+            <div class="setup-row">
+                <div class="setup-box">Ordem da Matriz: <input type="number" id="det_ordem" value="3" min="1" max="8"></div>
+                <button class="btn btn-gerar" onclick="initScreen('det')">Atualizar Dimensão</button>
+            </div>
+            <div class="matrices-area">
+                <div class="matrix-container">
+                    <h3>Matriz Analisada</h3><div class="grid-wrapper"><div id="det_gridA" class="grid"></div></div>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-calc" onclick="calcular('det', 'det')">Processar Determinante</button>
+            </div>
+            <div id="det_error" class="error-msg hidden"></div>
+            <div class="result-box">
+                <h3>Resultado Escalar</h3>
+                <div id="det_result">Aguardando operação...</div>
+            </div>
+        </section>
+
+        <section id="tela-gauss" class="screen">
+            <div class="screen-header">
+                <h2>Sistemas Lineares (Eliminação de Gauss)</h2>
+                <p>Insira os coeficientes e os termos independentes na Matriz Ampliada.</p>
+            </div>
+            <div class="setup-row">
+                <div class="setup-box">Nº de Equações: <input type="number" id="gau_rows" value="3" min="1"></div>
+                <div class="setup-box">Variáveis + Resultados (Colunas): <input type="number" id="gau_cols" value="4" min="2"></div>
+                <button class="btn btn-gerar" onclick="initScreen('gau')">Atualizar Sistema</button>
+            </div>
+            <div class="matrices-area">
+                <div class="matrix-container">
+                    <h3>Matriz Ampliada do Sistema</h3><div class="grid-wrapper"><div id="gau_gridA" class="grid"></div></div>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-action" onclick="calcular('gauss', 'gau')">Resolver e Classificar</button>
+            </div>
+            <div id="gau_error" class="error-msg hidden"></div>
+            <div class="result-box">
+                <h3>Solução Analítica</h3>
+                <div id="gau_result">Aguardando operação...</div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
