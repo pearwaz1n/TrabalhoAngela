@@ -1,16 +1,20 @@
-function iniciarApp() {
-    const telaInicio = document.getElementById('tela-inicio');
-    telaInicio.classList.remove('active');
-    telaInicio.style.display = 'none';
-    
+// Executa automaticamente assim que a página e os elementos HTML terminarem de carregar
+window.addEventListener('DOMContentLoaded', () => {
+    // Ajusta o alinhamento do container principal
     document.getElementById('main-container').style.alignItems = 'flex-start';
 
+    // Garante que a barra de navegação fique visível
     document.getElementById('main-nav').style.display = 'flex';
 
+    // Seleciona o primeiro botão da navbar (Adição / Subtração) e ativa a tela dele
     const primeiroBotaoNav = document.querySelectorAll('.nav-btn')[0];
-    openScreen('tela-basicas', primeiroBotaoNav);
-}
+    if (primeiroBotaoNav) {
+        primeiroBotaoNav.classList.add('active'); // Deixa o botão destacado
+        initScreen('bas'); // Inicializa o grid de matrizes da primeira tela
+    }
+});
 
+// Daqui para baixo, o seu código continua exatamente igual (Class Matriz, openScreen, etc...)
 class Matriz {
     constructor(dados) {
         this.dados = dados;
