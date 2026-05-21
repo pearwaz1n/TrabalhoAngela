@@ -18,9 +18,3 @@ Este trabalho implementa operações de matrizes e cálculo de determinantes em 
 
 Abra o `index.html` em um navegador moderno e utilize a interface para inserir dados de matrizes e calcular resultados.
 
-## Imagens
-
-![Captura de tela 1]
-
-![Captura de tela 2]
-
