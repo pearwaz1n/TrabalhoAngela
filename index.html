@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Matrizes</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
 
@@ -19,13 +19,7 @@
     </nav>
 
     <main class="main-content" id="main-container">
-
-        <section id="tela-inicio" class="screen welcome-screen active">
-            <h1 class="welcome-title">Bem-vindo!</h1>
-            <button class="btn btn-action" onclick="iniciarApp()">Iniciar</button>
-        </section>
-
-        <section id="tela-basicas" class="screen">
+        <section id="tela-basicas" class="screen active">
             <div class="screen-header">
                 <h2>Adição e Subtração</h2>
                 <p>As matrizes devem possuir exatamente a mesma ordem.</p>
@@ -166,6 +160,6 @@
 
     </main>
 
-    <script src="script.js"></script>
+    <script type="module" src="./js/script.js"></script>
 </body>
 </html>
