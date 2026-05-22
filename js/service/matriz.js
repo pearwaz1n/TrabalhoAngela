@@ -45,7 +45,14 @@ export class Matriz {
         if (n !== this.colunas) throw new Error("Restrição Estrutural: Determinante aplicável apenas a matrizes quadradas.");
         if (n === 1) return m[0][0];
         if (n === 2) return (m[0][0] * m[1][1]) - (m[0][1] * m[1][0]);
-        if (n === 3) return ((m[0][0]*m[1][1]*m[2][2]) + (m[0][1]*m[1][2]*m[2][0]) + (m[0][2]*m[1][0]*m[2][1])) - ((m[0][2]*m[1][1]*m[2][0]) + (m[0][0]*m[1][2]*m[2][1]) + (m[0][1]*m[1][0]*m[2][2]));
+        if (n === 3) return (
+            (m[0][0]*m[1][1]*m[2][2]) 
+            + (m[0][1]*m[1][2]*m[2][0]) 
+            + (m[0][2]*m[1][0]*m[2][1])) 
+            - ((m[0][2]*m[1][1]*m[2][0]) 
+            + (m[0][0]*m[1][2]*m[2][1]) 
+            + (m[0][1]*m[1][0]*m[2][2])
+        );
         
         let det = 0;
         for (let c = 0; c < n; c++) {
